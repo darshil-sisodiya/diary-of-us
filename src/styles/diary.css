@@ -1,0 +1,812 @@
+/* ==========================================================================
+   The diary: cover, page sheets, memory pages, letter, last page, navigation
+   ========================================================================== */
+.diary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 3vh, 28px);
+  width: 100%;
+  max-width: 1000px;
+}
+.book {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  perspective: 2200px;
+  scroll-margin-top: 16px;
+}
+.turn {
+  width: 100%;
+  transform-origin: left center;
+}
+.turn--cover {
+  display: grid;
+  place-items: center;
+}
+.diary-empty {
+  width: 60px;
+  color: var(--pink);
+}
+
+/* ---------- Cover ---------- */
+.cover {
+  padding: 22px 12px 48px;
+}
+.cover-book {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: min(440px, 86vw);
+  aspect-ratio: 3 / 4;
+  padding: 44px 34px 44px 56px;
+  text-align: center;
+  border-radius: 8px 20px 20px 8px;
+  background:
+    var(--grain),
+    repeating-linear-gradient(45deg, rgb(255 255 255 / 0.05) 0 2px, transparent 2px 5px),
+    radial-gradient(circle at 30% 18%, rgb(255 255 255 / 0.35), transparent 55%),
+    linear-gradient(150deg, color-mix(in srgb, var(--rose) 55%, var(--pink)), var(--rose));
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.25),
+    4px 4px 0 -1px var(--paper),
+    5px 5px 0 -1px #e8d9cb,
+    8px 8px 0 -2px var(--paper),
+    9px 9px 0 -2px #e8d9cb,
+    0 34px 50px -22px rgb(90 56 51 / 0.55);
+  rotate: -1.5deg;
+}
+.cover-spine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 30px;
+  border-radius: 8px 0 0 8px;
+  background: linear-gradient(to right, rgb(0 0 0 / 0.16), rgb(255 255 255 / 0.14) 45%, rgb(0 0 0 / 0.1));
+  border-right: 2px dashed rgb(255 255 255 / 0.5);
+}
+.cover-ribbon {
+  position: absolute;
+  top: 100%;
+  right: 24%;
+  width: 20px;
+  height: 46px;
+  background: var(--lavender);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.1));
+}
+.cover-stamp {
+  padding: 3px 12px;
+  border: 1.5px dashed var(--rose-deep);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  font-family: var(--type);
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  rotate: 2deg;
+}
+.cover-plate {
+  position: relative;
+  width: 100%;
+  padding: 30px 22px 24px;
+  border-radius: 14px;
+  background: var(--grain), var(--paper);
+  box-shadow: 0 10px 20px -12px rgb(90 56 51 / 0.5);
+  rotate: 1deg;
+}
+.cover-plate::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1.5px dashed color-mix(in srgb, var(--rose) 70%, transparent);
+  border-radius: 9px;
+  pointer-events: none;
+}
+.cover-plate-heart {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  color: var(--pink);
+}
+.cover-title {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.3rem, 1.7rem + 3vw, 3.4rem);
+  line-height: 1;
+}
+.cover-subtitle {
+  max-width: 28ch;
+  margin: 10px auto 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.cover-dedication {
+  padding: 3px 18px;
+  border-radius: 3px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+  font-family: var(--hand);
+  font-size: 1.45rem;
+  line-height: 1.3;
+  rotate: -2.5deg;
+}
+.cover-start {
+  margin-top: 4px;
+  --btn-bg: var(--paper);
+  --btn-edge: var(--rose-deep);
+}
+.cover-sticker {
+  position: absolute;
+}
+.cover-sticker--bow {
+  top: -24px;
+  left: 40px;
+  width: 60px;
+  height: 60px;
+  color: var(--lavender);
+  rotate: -12deg;
+}
+.cover-sticker--flower {
+  right: -20px;
+  bottom: 70px;
+  width: 54px;
+  height: 54px;
+  color: var(--butter);
+}
+.cover-sticker--star {
+  left: 42px;
+  bottom: 26px;
+  width: 28px;
+  height: 28px;
+  color: var(--butter);
+}
+.cover-sticker--sparkle {
+  right: 30px;
+  bottom: 28px;
+  width: 22px;
+  height: 22px;
+  color: var(--paper);
+}
+.cover-seal {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--rose) 60%, white), var(--rose-deep));
+  box-shadow: 0 3px 8px rgb(90 56 51 / 0.35);
+}
+.cover-seal .doodle {
+  width: 55%;
+  height: 55%;
+  color: var(--pink);
+  stroke: none;
+}
+
+/* ---------- Open page sheet ---------- */
+.sheet {
+  --gap: clamp(28px, 4vw, 56px);
+  --ring: color-mix(in srgb, var(--ink) 35%, var(--paper));
+  position: relative;
+  padding: clamp(30px, 4.5vw, 54px) clamp(20px, 4vw, 54px) clamp(56px, 6vw, 68px) clamp(32px, 5vw, 70px);
+  border-radius: 6px 16px 16px 6px;
+  border-left: 12px solid color-mix(in srgb, var(--accent, var(--rose)) 75%, var(--paper));
+  background:
+    var(--grain),
+    linear-gradient(to right, rgb(90 56 51 / 0.08), transparent 5%),
+    var(--sheet-bg, var(--paper));
+  box-shadow:
+    3px 3px 0 -1px var(--paper),
+    4px 4px 0 -1px #eadccd,
+    7px 7px 0 -2px var(--paper),
+    8px 8px 0 -2px #eadccd,
+    var(--shadow-lift);
+}
+@media (min-width: 761px) {
+  /* keep every page the same-ish size so the buttons don't jump around */
+  .sheet {
+    display: grid;
+    align-content: center;
+    min-height: min(640px, 74vh);
+  }
+}
+.sheet::before {
+  /* spiral binding */
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 26px;
+  bottom: 26px;
+  width: 36px;
+  background: radial-gradient(15px 4px at 50% 50%, var(--ring) 80%, transparent 100%) 0 0 / 36px 32px repeat-y;
+  pointer-events: none;
+}
+.sheet-ribbon {
+  position: absolute;
+  top: -6px;
+  right: clamp(26px, 6vw, 60px);
+  z-index: 4;
+  width: 22px;
+  height: 62px;
+  background: var(--accent-soft, var(--pink));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.12));
+}
+.page-number {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  text-align: center;
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  color: var(--ink-soft);
+}
+
+/* Page colour moods */
+.sheet:has(.theme-rose),
+.theme-rose {
+  --accent: var(--rose);
+  --accent-soft: var(--pink);
+  --tape: var(--pink);
+  --note: var(--butter);
+  --sheet-bg: color-mix(in srgb, var(--pink) 20%, var(--paper));
+}
+.sheet:has(.theme-peach),
+.theme-peach {
+  --accent: color-mix(in srgb, var(--peach) 55%, var(--rose));
+  --accent-soft: var(--peach);
+  --tape: var(--peach);
+  --note: var(--blue);
+  --sheet-bg: color-mix(in srgb, var(--peach) 20%, var(--paper));
+}
+.sheet:has(.theme-lavender),
+.theme-lavender {
+  --accent: color-mix(in srgb, var(--lavender) 76%, var(--ink));
+  --accent-soft: var(--lavender);
+  --tape: var(--lavender);
+  --note: var(--pink);
+  --sheet-bg: color-mix(in srgb, var(--lavender) 22%, var(--paper));
+}
+.sheet:has(.theme-butter),
+.theme-butter {
+  --accent: color-mix(in srgb, var(--butter) 50%, var(--rose));
+  --accent-soft: var(--butter);
+  --tape: var(--butter);
+  --note: var(--pink);
+  --sheet-bg: color-mix(in srgb, var(--butter) 16%, color-mix(in srgb, var(--blush) 30%, var(--paper)));
+}
+.sheet:has(.theme-blue),
+.theme-blue {
+  --accent: color-mix(in srgb, var(--blue) 80%, var(--ink));
+  --accent-soft: var(--blue);
+  --tape: var(--blue);
+  --note: var(--butter);
+  --sheet-bg: color-mix(in srgb, var(--blue) 18%, var(--paper));
+}
+
+/* ---------- Memory page ---------- */
+.diary-page {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--gap);
+  align-items: center;
+}
+.page-photos {
+  position: relative;
+}
+.page-photos::before {
+  /* the soft fold between left and right */
+  content: "";
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: calc(var(--gap) / -2);
+  width: 1px;
+  background: linear-gradient(transparent, color-mix(in srgb, var(--ink) 14%, transparent) 15% 85%, transparent);
+}
+.page-words {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--type);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.page-kicker::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent, var(--rose));
+}
+.page-title {
+  position: relative;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.7rem + 3vw, 3.7rem);
+  line-height: 1;
+  text-decoration: underline wavy color-mix(in srgb, var(--accent, var(--rose)) 75%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 12px;
+  text-decoration-skip-ink: none;
+  padding-bottom: 6px;
+}
+.is-short .page-title {
+  font-size: clamp(2.8rem, 2rem + 3.5vw, 4.2rem);
+}
+.page-subtitle {
+  font-family: var(--hand);
+  font-size: 1.55rem;
+  line-height: 1.2;
+  color: var(--ink-soft);
+}
+.page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.page-date {
+  padding: 2px 10px;
+  border: 1.5px dashed var(--accent, var(--rose));
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent-soft, var(--pink)) 40%, transparent);
+  font-family: var(--type);
+  font-size: 0.85rem;
+  rotate: -1.5deg;
+}
+.page-place {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.page-place .doodle {
+  width: 17px;
+  height: 17px;
+  color: var(--accent-soft, var(--pink));
+}
+.page-story {
+  max-width: 48ch;
+  white-space: pre-line;
+}
+.page-story.is-typewriter {
+  font-family: var(--type);
+  font-size: 0.95em;
+  line-height: 1.8;
+}
+.sticky-note {
+  position: relative;
+  max-width: 270px;
+  margin-top: 12px;
+  padding: 24px 20px 16px;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.25), transparent 30%), var(--note, var(--butter));
+  font-family: var(--hand);
+  font-size: 1.4rem;
+  line-height: 1.25;
+  white-space: pre-line;
+  rotate: -2deg;
+  box-shadow: 0 12px 16px -10px rgb(90 56 51 / 0.4);
+}
+.sticky-note .photo-tape {
+  top: -10px;
+  left: 50%;
+  translate: -50% 0;
+  rotate: -4deg;
+}
+.page-sticker {
+  position: absolute;
+  z-index: 5;
+}
+.page-sticker--0 {
+  top: -30px;
+  left: -10px;
+  width: 46px;
+  height: 46px;
+  color: var(--accent-soft, var(--pink));
+}
+.page-sticker--1 {
+  bottom: -38px;
+  left: 28%;
+  width: 34px;
+  height: 34px;
+  color: var(--butter);
+}
+.page-sticker--2 {
+  top: 48%;
+  right: -40px;
+  width: 26px;
+  height: 26px;
+  color: var(--lavender);
+}
+
+/* ---------- Love letter ---------- */
+.sheet--note {
+  --sheet-bg: color-mix(in srgb, var(--blush) 45%, var(--paper));
+}
+.letter-page {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 18px 0 30px;
+}
+.letter-envelope {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(460px, 86%);
+  aspect-ratio: 10 / 5;
+  translate: -50% 0;
+  rotate: 2.5deg;
+  border-radius: 10px;
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1px), rgb(90 56 51 / 0.12) 50%, transparent calc(50% + 1px)) 0 0 / 50% 100% no-repeat,
+    linear-gradient(to top left, transparent calc(50% - 1px), rgb(90 56 51 / 0.12) 50%, transparent calc(50% + 1px)) 100% 0 / 50% 100% no-repeat,
+    color-mix(in srgb, var(--rose) 50%, var(--pink));
+  box-shadow: var(--shadow-soft);
+}
+.letter {
+  position: relative;
+  width: min(100%, 640px);
+  padding: clamp(40px, 6vw, 60px) clamp(26px, 6vw, 62px) clamp(36px, 5vw, 50px);
+  border-radius: 4px;
+  background: var(--grain), linear-gradient(170deg, var(--paper), color-mix(in srgb, var(--butter) 18%, var(--paper)));
+  box-shadow: var(--shadow-lift);
+}
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1.5px solid color-mix(in srgb, var(--rose) 35%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--rose) 20%, transparent);
+  outline-offset: 3px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.letter-clip {
+  position: absolute;
+  top: -24px;
+  left: 26px;
+  width: 48px;
+  height: 48px;
+  stroke: color-mix(in srgb, var(--ink) 45%, var(--paper));
+  stroke-width: 2.2;
+  rotate: 8deg;
+}
+.letter-deco {
+  position: absolute;
+}
+.letter-deco--flower {
+  left: -22px;
+  bottom: -18px;
+  width: 52px;
+  height: 52px;
+  color: var(--pink);
+}
+.letter-deco--heart {
+  right: -14px;
+  top: -14px;
+  width: 36px;
+  height: 36px;
+  color: var(--rose);
+  rotate: 12deg;
+}
+.letter-deco--petal {
+  right: 22px;
+  bottom: 16px;
+  width: 18px;
+  height: 18px;
+  color: var(--peach);
+  rotate: 40deg;
+}
+.letter-title {
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.3rem, 1.6rem + 2.6vw, 3.1rem);
+  line-height: 1.05;
+  color: var(--rose-deep);
+}
+.letter-greeting {
+  margin-bottom: 0.7rem;
+  font-family: var(--hand);
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+.letter-paragraph {
+  margin-bottom: 1.15em;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  white-space: pre-line;
+}
+.letter-closing {
+  margin-top: 1.2rem;
+  font-family: var(--hand);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  white-space: pre-line;
+}
+.letter-signature {
+  margin-top: 0.3rem;
+  text-align: right;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 1.1;
+  color: var(--rose-deep);
+  rotate: -3deg;
+}
+.letter-ps {
+  margin-top: 1.4rem;
+  font-family: var(--hand);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  color: var(--ink-soft);
+  white-space: pre-line;
+}
+
+/* ---------- Last page ---------- */
+.sheet--ending {
+  --accent: var(--rose);
+  --accent-soft: var(--butter);
+  --sheet-bg: radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--butter) 40%, var(--paper)), transparent 50%), color-mix(in srgb, var(--blush) 55%, var(--paper));
+}
+.ending-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 660px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ending-bouquet {
+  width: clamp(104px, 18vw, 140px);
+  height: auto;
+  aspect-ratio: 120 / 150;
+  animation: bob 6s ease-in-out infinite;
+}
+.ending-title {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 3.9rem);
+  line-height: 1.04;
+}
+.ending-message {
+  max-width: 46ch;
+  font-size: 1.08rem;
+  white-space: pre-line;
+}
+.ending-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ending-sparkle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: var(--butter);
+}
+.ending-sparkle--0 { top: 2%; left: 18%; }
+.ending-sparkle--1 { top: 10%; right: 16%; width: 28px; height: 28px; animation-delay: -1s; }
+.ending-sparkle--2 { top: 34%; left: 4%; width: 16px; height: 16px; animation-delay: -2s; color: var(--pink); }
+.ending-sparkle--3 { top: 40%; right: 3%; animation-delay: -0.5s; color: var(--lavender); }
+.ending-sparkle--4 { bottom: 18%; left: 8%; width: 24px; height: 24px; animation-delay: -1.6s; }
+.ending-sparkle--5 { bottom: 10%; right: 10%; width: 16px; height: 16px; animation-delay: -2.4s; color: var(--pink); }
+.ending-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+}
+.surprise {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.surprise-prompt {
+  font-family: var(--hand);
+  font-size: 1.45rem;
+  color: var(--rose-deep);
+}
+.surprise-envelope {
+  /* headroom so the opened flap + letter never cover the text above */
+  position: relative;
+  padding-top: min(96px, 26vw);
+}
+.secret-note {
+  position: relative;
+  width: min(100%, 470px);
+  padding: 30px 26px 22px;
+  border-radius: 6px;
+  background: var(--grain), var(--paper);
+  box-shadow: var(--shadow-lift);
+  font-family: var(--hand);
+  font-size: 1.6rem;
+  line-height: 1.35;
+  text-align: center;
+  white-space: pre-line;
+}
+.secret-note:focus {
+  outline: none;
+}
+.secret-note .photo-tape {
+  top: -10px;
+  left: 50%;
+  translate: -50% 0;
+  rotate: 3deg;
+  --tape: var(--lavender);
+}
+.secret-signature {
+  margin-top: 10px;
+  text-align: right;
+  color: var(--rose-deep);
+}
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: var(--rose-deep);
+  animation: blink 1s steps(1) infinite;
+}
+
+/* ---------- Navigation + progress ---------- */
+.diary-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 980px);
+}
+.nav-prev {
+  justify-self: start;
+}
+.nav-next {
+  justify-self: end;
+}
+.nav-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.progress-hearts {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.progress-hearts li {
+  width: 22px;
+  height: 22px;
+  transition: scale 0.3s ease;
+}
+.progress-hearts .doodle {
+  fill: var(--paper);
+  stroke: var(--rose);
+  stroke-width: 1.8;
+  transition: fill 0.3s ease;
+}
+.progress-hearts .is-filled .doodle {
+  fill: var(--pink);
+}
+.progress-hearts .is-current {
+  scale: 1.25;
+}
+.progress-hearts .is-current .doodle {
+  fill: var(--rose);
+  stroke: var(--rose-deep);
+}
+.progress-label {
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 760px) {
+  .diary-page {
+    grid-template-columns: 1fr;
+  }
+  .page-photos::before {
+    display: none;
+  }
+  .page-sticker--2 {
+    display: none;
+  }
+  .page-sticker--0 {
+    width: 36px;
+    height: 36px;
+    top: -30px;
+    left: auto;
+    right: 56px;
+  }
+  .page-sticker--1 {
+    bottom: -44px;
+    left: 6%;
+  }
+}
+@media (max-width: 560px) {
+  .sheet {
+    padding: 34px 16px 56px 24px;
+    border-left-width: 8px;
+  }
+  .sheet::before {
+    left: -20px;
+    width: 30px;
+    background-size: 30px 30px;
+    background-image: radial-gradient(12px 3.5px at 50% 50%, var(--ring) 80%, transparent 100%);
+  }
+  .cover-book {
+    padding: 40px 22px 40px 44px;
+    gap: 14px;
+  }
+  .cover-spine {
+    width: 22px;
+  }
+  .cover-sticker--flower {
+    right: -10px;
+    width: 42px;
+    height: 42px;
+  }
+  .diary-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+  .nav-middle {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+  .nav-prev,
+  .nav-next {
+    width: 100%;
+  }
+  .letter-clip {
+    left: 16px;
+  }
+  .letter-deco--flower {
+    left: -10px;
+  }
+  .letter-deco--heart {
+    right: -6px;
+  }
+  .sticky-note {
+    max-width: 100%;
+  }
+}

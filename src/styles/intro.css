@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Opening screen + the CSS envelope (also used for the final surprise)
+   ========================================================================== */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.6vh, 26px);
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+}
+.intro-kicker {
+  font-family: var(--hand);
+  font-size: 1.7rem;
+  color: var(--rose-deep);
+  rotate: -3deg;
+}
+.intro-heading {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.6rem + 4vw, 4.2rem);
+  line-height: 1.02;
+  margin-top: 2px;
+}
+.intro-message {
+  max-width: 36ch;
+  margin: 12px auto 0;
+  color: var(--ink-soft);
+  white-space: pre-line;
+}
+.intro-envelope {
+  position: relative;
+  padding-top: min(100px, 24vw);
+}
+.intro-deco {
+  position: absolute;
+  z-index: 6;
+}
+.intro-deco--a {
+  width: 44px;
+  height: 44px;
+  left: -26px;
+  bottom: 12px;
+  color: var(--peach);
+}
+.intro-deco--b {
+  width: 30px;
+  height: 30px;
+  right: -14px;
+  top: min(84px, 20vw);
+  color: var(--butter);
+}
+.intro-deco--c {
+  width: 26px;
+  height: 26px;
+  right: -22px;
+  bottom: 30px;
+  color: var(--pink);
+  rotate: 14deg;
+}
+.intro-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- Envelope ---------- */
+.envelope {
+  position: relative;
+  width: min(340px, 76vw);
+  aspect-ratio: 10 / 7;
+  perspective: 900px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.envelope--sm {
+  width: min(230px, 62vw);
+}
+.env-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--rose) 70%, var(--paper));
+  box-shadow: 0 16px 30px -12px rgb(90 56 51 / 0.4);
+}
+.env-letter {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 6%;
+  height: 88%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 9% 8% 0;
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(transparent 0 23px, color-mix(in srgb, var(--rose) 22%, transparent) 23px 24px) 0 46px / 100% no-repeat,
+    var(--paper);
+  box-shadow: 0 2px 6px rgb(90 56 51 / 0.15);
+  transition: transform 0.85s cubic-bezier(0.34, 1.3, 0.64, 1) 0.45s;
+}
+.is-open .env-letter {
+  transform: translateY(-50%);
+}
+.env-letter-heart {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  color: var(--rose);
+}
+.env-letter-text {
+  font-family: var(--hand);
+  font-size: clamp(1.15rem, 1rem + 1vw, 1.45rem);
+  line-height: 1.1;
+}
+.env-front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--pink), color-mix(in srgb, var(--pink) 80%, var(--rose)));
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+}
+.env-front::before {
+  /* the bottom fold */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--pink) 75%, var(--paper));
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+}
+.env-label {
+  position: absolute;
+  inset: auto 0 9% 0;
+  font-family: var(--hand);
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.7rem);
+  color: var(--ink);
+}
+.env-flap {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 57%;
+  z-index: 4;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rose) 75%, var(--paper)), color-mix(in srgb, var(--rose) 60%, var(--pink)));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition:
+    transform 0.65s cubic-bezier(0.6, 0.05, 0.3, 1),
+    z-index 0s linear 0.3s;
+}
+.is-open .env-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+.env-seal {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--rose) 70%, white), var(--rose-deep));
+  box-shadow: 0 3px 8px rgb(90 56 51 / 0.3), inset 0 -2px 4px rgb(0 0 0 / 0.15);
+  transition: scale 0.3s ease, opacity 0.3s ease;
+}
+.envelope--sm .env-seal {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+}
+.env-seal .doodle {
+  width: 56%;
+  height: 56%;
+  color: var(--pink);
+  stroke: none;
+}
+.is-open .env-seal {
+  scale: 0;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .envelope:not(.is-open):hover .env-flap {
+    transform: rotateX(18deg);
+  }
+}

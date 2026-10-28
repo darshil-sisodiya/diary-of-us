@@ -1,0 +1,314 @@
+/* ==========================================================================
+   The room (home page) — an isometric diorama drawn in RoomScene.jsx
+   ========================================================================== */
+:root {
+  /* also used by the photo wall frame */
+  --wood: #ecc9a8;
+  --wood-dark: #d4a985;
+  --cork: #ddb88f;
+}
+
+.room-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(6px, 1.4vh, 14px);
+  width: 100%;
+  max-width: 1240px;
+}
+.room-head {
+  text-align: center;
+}
+.room-kicker {
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #d81b6a;
+}
+.room-title {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 1.6rem + 3.4vw, 4.4rem);
+  line-height: 1;
+  color: #8f1748;
+}
+.room-hint {
+  margin-top: 4px;
+  font-family: var(--hand);
+  font-size: 1.35rem;
+  color: #b8285f;
+}
+
+.room-svg {
+  display: block;
+  width: min(100%, calc((100dvh - 70px) * 1.04), 1100px);
+  height: auto;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* On wide screens the heading sits in the empty corner beside the room. */
+@media (min-width: 901px) {
+  .room-head {
+    position: absolute;
+    top: 3%;
+    left: 0;
+    z-index: 2;
+    max-width: 30%;
+    text-align: left;
+    pointer-events: none;
+  }
+  .room-kicker {
+    rotate: -3deg;
+  }
+}
+
+/* Window sky follows her clock */
+.sky-morning { --sky-top: #ffcfb8; --sky-bottom: #fff0d2; --orb: #ffe48f; --hills: #b8e3a8; --sun-patch: #fff6d8; }
+.sky-day { --sky-top: #8fd0ff; --sky-bottom: #dff3ff; --orb: #ffe680; --hills: #9edd96; --sun-patch: #fffbe6; }
+.sky-evening { --sky-top: #ff9fb4; --sky-bottom: #ffd09a; --orb: #ffd286; --hills: #c6a4d6; --sun-patch: #ffd9b0; }
+.sky-night { --sky-top: #2c3170; --sky-bottom: #5b5fa6; --orb: #fff3c4; --hills: #3c3f78; --sun-patch: #b9c6ff; }
+.win-orb { fill: var(--orb); }
+.win-moon-bite { fill: var(--sky-top); display: none; }
+.win-hills { fill: var(--hills); }
+.win-stars { display: none; }
+.sky-night .win-stars,
+.sky-night .win-moon-bite { display: inline; }
+.sky-night .win-clouds { display: none; }
+.sunpatch { fill: var(--sun-patch); opacity: 0.5; }
+.sky-night .sunpatch { opacity: 0.3; }
+.lamp-glow { opacity: 0.55; }
+.sky-evening .lamp-glow,
+.sky-night .lamp-glow { opacity: 1; }
+
+/* ---------- Clickable objects ---------- */
+.obj {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.28s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.28s ease;
+}
+@media (hover: hover) {
+  .obj:hover {
+    transform: translateY(-7px);
+    filter: drop-shadow(0 0 10px rgb(255 255 255 / 0.95)) drop-shadow(0 8px 10px rgb(150 60 90 / 0.25));
+  }
+  }
+.obj:focus-visible {
+  transform: translateY(-7px);
+  filter: drop-shadow(0 0 3px var(--rose-deep)) drop-shadow(0 0 10px #fff);
+}
+.obj:active {
+  transform: translateY(-2px);
+}
+.tag rect {
+  fill: #fff;
+  stroke: #ff3f8e;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 4px 6px rgb(74 15 46 / 0.35));
+  transition: fill 0.2s;
+}
+.tag text {
+  font-family: var(--hand);
+  font-size: 24px;
+  font-weight: 700;
+  fill: #8f1748;
+}
+
+/* ---------- Little ambient life ---------- */
+.bulb {
+  animation: bulb 3.4s ease-in-out infinite;
+}
+@keyframes bulb {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.neon {
+  animation: neon 4s ease-in-out infinite;
+}
+@keyframes neon {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.85; }
+  50% { opacity: 0.55; }
+  55% { opacity: 0.9; }
+}
+.sway {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: sway 4s ease-in-out infinite;
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50% { transform: rotate(1.6deg); }
+}
+.note:hover .sway {
+  animation-duration: 1s;
+}
+/* shared with the photo wall, game cards and photobooth bulbs */
+@keyframes obj-in {
+  from { opacity: 0; scale: 0.85; }
+}
+@keyframes twinkle-bulb {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* ---------- The cat ---------- */
+.room-cat {
+  cursor: pointer;
+  outline: none;
+}
+.room-cat:focus-visible .cat-body {
+  filter: drop-shadow(0 0 4px var(--rose-deep));
+}
+.cat-body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: breathe 3.6s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.015, 1.05); }
+}
+.cat-eyes-open { display: none; }
+.room-cat.is-awake .cat-eyes-open { display: inline; }
+.room-cat.is-awake .cat-eyes-closed { display: none; }
+.room-cat.is-awake .cat-body { animation: purr 0.16s linear infinite; }
+@keyframes purr {
+  50% { transform: translateX(0.7px); }
+}
+.cat-z text {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 18px;
+  animation: zzz 3s ease-in-out infinite;
+}
+.cat-z text:nth-child(2) {
+  font-size: 14px;
+  animation-delay: -1.5s;
+}
+@keyframes zzz {
+  0% { opacity: 0; transform: translate(0, 6px); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translate(6px, -10px); }
+}
+.cat-bubble rect {
+  fill: #fff;
+  filter: drop-shadow(0 3px 4px rgb(150 60 90 / 0.25));
+}
+.cat-bubble text {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 20px;
+  fill: #8f1748;
+}
+
+/* ---------- Shortcut chips (phones) ---------- */
+.room-shortcuts {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 520px;
+}
+.room-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 4px 14px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff, #ffe3ee);
+  box-shadow: 0 4px 0 #ffb8cf, 0 8px 16px -8px rgb(150 60 90 / 0.4);
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.room-chip svg {
+  width: 17px;
+  height: 17px;
+  color: var(--rose-deep);
+}
+.room-chip:active {
+  translate: 0 2px;
+  box-shadow: 0 2px 0 #ffb8cf;
+}
+
+@media (max-width: 700px) {
+  .room-svg {
+    width: calc(100% + 24px);
+    margin: -6px -12px 0;
+  }
+  .tag {
+    display: none;
+  }
+  .room-shortcuts {
+    display: flex;
+  }
+}
+
+/* ---------- The notes open as a letter ---------- */
+.note-scene {
+  width: 100%;
+  max-width: 760px;
+}
+
+/* tags are clickable too (they mirror the object under them) */
+.tag-hit {
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+@media (hover: hover) {
+  .tag-hit:hover {
+    transform: translateY(-3px);
+  }
+  .tag-hit:hover rect {
+    fill: #ffd3e3;
+  }
+}
+.note-scene .letter {
+  min-height: min(460px, 70vh);
+}
+
+.candle {
+  animation: flicker 2.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  40% { opacity: 0.8; transform: scale(0.94, 1.06); }
+  70% { opacity: 0.95; transform: scale(1.04, 0.96); }
+}
+.env-label {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 12.5px;
+  fill: #8f1748;
+}
+
+/* the notes corner: glowing halo, ribbon banner, envelopes that invite a tap */
+.notes-halo {
+  animation: halo 3.2s ease-in-out infinite;
+}
+@keyframes halo {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.notes-banner text {
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 18px;
+  fill: #fff;
+}
+.note .sway {
+  filter: drop-shadow(0 3px 3px rgb(74 15 46 / 0.35));
+}
+@media (hover: hover) {
+  .note:hover {
+    filter: drop-shadow(0 0 12px #fff) drop-shadow(0 0 4px #ffb3d6);
+  }
+}

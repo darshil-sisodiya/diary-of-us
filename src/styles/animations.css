@@ -1,0 +1,136 @@
+/* Gentle, transform/opacity-only animations. */
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-6deg);
+  }
+  50% {
+    transform: translate(var(--drift, 12px), -22px) rotate(8deg);
+  }
+}
+
+@keyframes beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.18);
+  }
+  24% {
+    transform: scale(0.96);
+  }
+  36% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.75) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(20deg);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-9deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes bars {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.beat {
+  animation: beat 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+.twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+  transform-origin: center;
+}
+.sticker-wiggle {
+  transition: scale 0.2s ease;
+  transform-origin: center;
+}
+@media (hover: hover) {
+  .sticker-wiggle:hover {
+    animation: wiggle 0.6s ease-in-out;
+    scale: 1.08;
+  }
+}
+
+/* Calmer when the config asks for "gentle". */
+.motion-gentle .floaty {
+  animation-duration: 30s !important;
+}
+.motion-gentle .twinkle,
+.motion-gentle .beat {
+  animation-duration: 4.8s;
+}
+
+/* Pause everything decorative while the tab isn't visible. */
+.is-hidden *,
+.is-hidden *::before,
+.is-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+/* No movement at all: device setting "reduce motion", or animation.intensity = "off". */
+.motion-off *,
+.motion-off *::before,
+.motion-off *::after {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
