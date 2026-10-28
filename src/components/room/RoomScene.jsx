@@ -129,10 +129,12 @@ function Tag({ x, y, text: label, r = -3 }) {
   const w = 30 + label.length * 10.5;
   return (
     <g className="tag" transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r})`}>
-      <rect x={-w / 2} y={-18} width={w} height={36} rx={18} />
-      <text y={7} textAnchor="middle">
-        {label}
-      </text>
+      <g className="tag-body">
+        <rect x={-w / 2} y={-18} width={w} height={36} rx={18} />
+        <text y={7} textAnchor="middle">
+          {label}
+        </text>
+      </g>
     </g>
   );
 }
