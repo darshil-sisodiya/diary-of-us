@@ -115,14 +115,6 @@
     linear-gradient(180deg, rgb(0 0 0 / 0.08), transparent 30%, rgb(0 0 0 / 0.18)),
     repeating-linear-gradient(90deg, color-mix(in srgb, var(--rose) 80%, var(--ink)) 0 10px, var(--rose) 22px 26px, color-mix(in srgb, var(--rose) 80%, var(--ink)) 38px);
 }
-.booth-note {
-  max-width: 34ch;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: rgb(0 0 0 / 0.28);
-  font-size: 0.82rem;
-  color: #fff;
-}
 .booth-error {
   max-width: 26ch;
   font-family: var(--hand);

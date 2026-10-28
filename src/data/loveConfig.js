@@ -279,7 +279,6 @@ export const loveConfig = {
     title: "our photobooth",
     subtitle: "four snaps, one strip, zero retakes (okay, unlimited retakes)",
     startText: "turn on the camera",
-    privacyNote: "the camera stays on this device — nothing is uploaded",
     shootText: "take our photos",
     retakeText: "again!",
     downloadText: "save the strip",

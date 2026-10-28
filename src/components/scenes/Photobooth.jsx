@@ -216,7 +216,6 @@ export default function Photobooth() {
                   <Camera aria-hidden="true" />
                   {text(pb.startText) || "turn on the camera"}
                 </button>
-                {text(pb.privacyNote) && <p className="booth-note">{text(pb.privacyNote)}</p>}
               </div>
             )}
             {status === "error" && (
