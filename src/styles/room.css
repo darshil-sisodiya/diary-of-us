@@ -15,7 +15,6 @@
   align-items: center;
   gap: clamp(6px, 1.4vh, 14px);
   width: 100%;
-  max-width: 1240px;
 }
 .room-head {
   text-align: center;
@@ -42,7 +41,7 @@
 
 .room-svg {
   display: block;
-  width: min(100%, calc((100dvh - 70px) * 1.04), 1100px);
+  width: min(100%, calc(90dvh * 952 / 880)); /* 90% of the screen height */
   height: auto;
   overflow: visible;
   -webkit-tap-highlight-color: transparent;
@@ -50,6 +49,10 @@
 
 /* On wide screens the heading sits in the empty corner beside the room. */
 @media (min-width: 901px) {
+  .app:has(.room-page) {
+    padding-block: 0;
+    overflow-y: clip; /* the slide-in animation would flash a scrollbar */
+  }
   .room-head {
     position: absolute;
     top: 3%;

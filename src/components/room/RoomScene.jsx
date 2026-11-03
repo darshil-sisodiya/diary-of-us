@@ -241,7 +241,7 @@ export default function RoomScene({ sky, available, labels, notes, notesHeading,
   const notePos = [46, 128, 210];
 
   return (
-    <svg viewBox="0 -6 1000 960" className={`room-svg sky-${sky}`} role="group" aria-label="our room">
+    <svg viewBox="24 30 952 880" className={`room-svg sky-${sky}`} role="group" aria-label="our room">
       <defs>
         <linearGradient id="room-face" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
           <stop offset="0" stopColor="#fff" stopOpacity="0.08" />
