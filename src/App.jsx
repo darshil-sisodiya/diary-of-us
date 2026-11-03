@@ -12,6 +12,8 @@ import SceneFrame from "./components/scenes/SceneFrame.jsx";
 import Photobooth from "./components/scenes/Photobooth.jsx";
 import PhotoWall from "./components/scenes/PhotoWall.jsx";
 import MemoryMatch from "./components/scenes/MemoryMatch.jsx";
+import ArtStudio from "./components/scenes/ArtStudio.jsx";
+import Wordle from "./components/scenes/Wordle.jsx";
 import LoveNote from "./components/LoveNote.jsx";
 import { ClickHearts } from "./components/Bursts.jsx";
 import { Heart } from "./components/Doodles.jsx";
@@ -53,6 +55,8 @@ const SCENES = {
   photobooth: { Comp: Photobooth, on: () => isOn("photobooth", config.photobooth) },
   photoWall: { Comp: PhotoWall, on: () => isOn("photoWall", config.photoWall) },
   memoryMatch: { Comp: MemoryMatch, on: () => isOn("memoryMatch", config.memoryMatch) },
+  artStudio: { Comp: ArtStudio, on: () => isOn("artStudio", config.artStudio) },
+  wordle: { Comp: Wordle, on: () => isOn("wordle", config.wordle) },
   // note-1, note-2, note-3 … one letter per note in the config
   ...Object.fromEntries(
     (config.notes?.items || []).slice(0, 3).map((note, i) => [

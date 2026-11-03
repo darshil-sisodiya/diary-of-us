@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { BookHeart, Camera, Images, Mail, Sparkles } from "lucide-react";
+import { BookHeart, Camera, Grid3x3, Images, Mail, Palette, Sparkles } from "lucide-react";
 import { loveConfig as config } from "../../data/loveConfig.js";
 import { isOn, text } from "../../utils/content.js";
 import RoomScene from "./RoomScene.jsx";
@@ -12,7 +12,7 @@ function timeOfDay() {
   return "night";
 }
 
-const ICONS = { diary: BookHeart, photobooth: Camera, photoWall: Images, memoryMatch: Sparkles };
+const ICONS = { diary: BookHeart, photobooth: Camera, photoWall: Images, memoryMatch: Sparkles, artStudio: Palette, wordle: Grid3x3 };
 
 export default function Room({ onOpen, available }) {
   const r = config.room || {};
@@ -28,7 +28,7 @@ export default function Room({ onOpen, available }) {
 
   // Quick buttons under the room (mainly for phones, where the room is small).
   const shortcuts = [
-    ...["diary", "photobooth", "photoWall", "memoryMatch"]
+    ...["diary", "photobooth", "photoWall", "memoryMatch", "artStudio", "wordle"]
       .filter((id) => available.includes(id))
       .map((id) => ({ id, label: labels[id] || id, Icon: ICONS[id] })),
     ...notes.map((n) => ({ id: n.id, label: n.label, Icon: Mail })),

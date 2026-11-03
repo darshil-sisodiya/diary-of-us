@@ -42,7 +42,7 @@ export const loveConfig = {
   features: {
     intro: true, // the envelope opening screen
     diaryCover: true, // the closed-book cover / home page
-    datePages: true, // the four memory pages
+    datePages: true, // the memory pages
     loveNote: true, // the letter
     ending: true, // the last page
     finalSurprise: true, // the secret envelope on the last page
@@ -60,6 +60,8 @@ export const loveConfig = {
     photoWall: true, // the corkboard
     notes: true, // the three little notes on the clothesline
     memoryMatch: false, // a deck of cards on the shelf (memory game) — set to true to bring it back
+    artStudio: true, // the easel on the floor (our painting timelapse)
+    wordle: true, // the little letter board on the wall (our live wordle)
     roomCat: true, // the sleepy cat on the bed
   },
 
@@ -92,6 +94,8 @@ export const loveConfig = {
       photobooth: "photobooth",
       photoWall: "photo wall",
       memoryMatch: "memory game",
+      artStudio: "art studio",
+      wordle: "our wordle",
       // the notes take their labels from the notes section below
     },
     catSays: "prrr ♡", // what the cat says when she taps it
@@ -111,7 +115,7 @@ export const loveConfig = {
   },
 
   /* ------------------------------------------------------------------------
-   * 3. THE FOUR DATE PAGES
+   * 3. THE DATE PAGES
    *
    *  layout — how the 4 photos are arranged. Pick one per page:
    *     "polaroid-grid"     four Polaroids, each slightly tilted
@@ -223,6 +227,27 @@ export const loveConfig = {
           { src: "/images/date-4/photo-4.jpg", alt: "Close-up selfie of us, her sticking her tongue out", caption: "[OPTIONAL CAPTION]", stamp: "", fit: "cover", focus: "66% 45%" },
         ],
       },
+      {
+        id: "fifth-date",
+        enabled: true,
+        kicker: "Date no. 5",
+        title: "Our Fifth Date",
+        subtitle: "Painting date",
+        dateLabel: "31st October 2026",
+        place: "[OPTIONAL PLACE]",
+        description: "I wanna start with how much i missed you, i really hate being away from you but i was so happy we were going to see each other and going on a cute date heheheh, i was so excited to paint with you baby and omg you looked so damnn hot, like i was like ouu shii how's she this hot and the note you made me was so damnn cute along with the other gifts you gave me, they were all sososo cutieeeee. I was so bad at painting but i enjoyed watching you paint cus you looked so cute while painting and i was just getting to admire you, i had so much fun taking your photos and i was so happy when you liked them heehe, we got so many cute photos and it was genuinely our best date so far, i loved playing with your stomach and our short makeout session too, i wish i could have kissed you more but it really was the best day <3",
+        typewriter: false,
+        note: "my pretty artist", // sticky note on the page
+        theme: "blue",
+        layout: "scattered-photos",
+        stickers: ["star", "sparkle", "heart"],
+        photos: [
+          { src: "/images/date-5/photo-1.jpg", alt: "Close-up selfie of us, him kissing her cheek while she sticks her tongue out", caption: "[OPTIONAL CAPTION]", stamp: "", fit: "cover", focus: "50% 45%" },
+          { src: "/images/date-5/photo-2.jpg", alt: "Selfie of us at the pottery café, him squishing her cheeks while she pouts", caption: "[OPTIONAL CAPTION]", stamp: "", fit: "cover", focus: "50% 40%" },
+          { src: "/images/date-5/photo-3.jpg", alt: "Selfie of us both pouting, her hand on his cheek", caption: "[OPTIONAL CAPTION]", stamp: "", fit: "cover", focus: "50% 35%" },
+          { src: "/images/date-5/photo-4.jpg", alt: "Selfie of us, him resting on her shoulder while she sticks her tongue out", caption: "[OPTIONAL CAPTION]", stamp: "", fit: "cover", focus: "55% 35%" },
+        ],
+      },
     ],
   },
 
@@ -304,6 +329,41 @@ export const loveConfig = {
     includeDiaryPhotos: true,
     extraPhotos: [],
     shuffleText: "shuffle",
+  },
+
+  /* ------------------------------------------------------------------------
+   * 7½. THE ART STUDIO (the easel on the floor)
+   *  The timelapse plays on the canvas; the photo hangs beside it.
+   * ---------------------------------------------------------------------- */
+  artStudio: {
+    enabled: true,
+    title: "our little art studio",
+    subtitle: "painting date · 31st October 2026",
+    roomPhoto: "/images/painting/her-painting.jpg", // shown on the easel in the room
+    video: "/images/painting/timelapse.mp4",
+    videoTitle: "Us, Painting",
+    videoNote: "", // small line under the title ("" hides it)
+    photo: "/images/painting/our-painting.jpg",
+    photoTitle: "Our Masterpieces",
+    photoNote: "",
+    playText: "play",
+    pauseText: "pause",
+  },
+
+  /* ------------------------------------------------------------------------
+   * 7¾. OUR WORDLE (the letter board on the wall)
+   *  One secret word (picked at random from ~2,300 everyday words), one shared
+   *  board, and we take turns guessing. Updates live on both phones (Firebase).
+   * ---------------------------------------------------------------------- */
+  wordle: {
+    enabled: true,
+    title: "our wordle",
+    subtitle: "one word, two brains, taking turns ♡",
+    herName: "Srimayee",
+    yourName: "Darshil",
+    tries: 6,
+    database: "https://dada-91b67-default-rtdb.asia-southeast1.firebasedatabase.app",
+    room: "us-xxyYjlvr3MmFA35Q", // must match the Firebase rules
   },
 
   /* ------------------------------------------------------------------------

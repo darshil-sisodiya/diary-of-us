@@ -1,5 +1,6 @@
 import { useEffect, useId, useState } from "react";
-import { allPhotos } from "../../utils/content.js";
+import { loveConfig as config } from "../../data/loveConfig.js";
+import { allPhotos, asset, hasContent } from "../../utils/content.js";
 
 /* ==========================================================================
    The room: an isometric "dollhouse" drawn in SVG.
@@ -48,6 +49,7 @@ const C = {
   string: "#ffd27a",
   lavender: "#b58cff",
   cat: "#ffc37c",
+  wood: "#f2b77e",
   catStripe: "#f09a45",
   bulbs: ["#ffe27a", "#ffffff", "#ffb3d6", "#fff3b0", "#ffd0f0"],
   seals: { rose: "#ff3f8e", lavender: "#9a6bff", butter: "#ffb62e", blue: "#3ea8ff", peach: "#ff7d4f" },
@@ -430,12 +432,12 @@ export default function RoomScene({ sky, available, labels, notes, notesHeading,
           <g transform={`${onFaceY(9)} translate(22 0)`}>
             <rect x="236" y="-306" width="180" height="112" rx="4" fill={C.blush} />
             <rect x="236" y="-306" width="180" height="112" rx="4" fill="url(#room-felt)" />
-            {[[248, -296, -6, 1], [292, -300, 4, 2], [338, -294, -3, 3], [262, -250, 5, 4], [380, -252, -5, 5]].map(([x, y, r, k]) => (
+            {[[248, -296, -6, 1], [292, -300, 4, 2], [338, -294, -3, 3], [382, -298, 6, 6], [262, -250, 5, 4], [298, -244, -4, 7], [380, -252, -5, 5]].map(([x, y, r, k]) => (
               <g key={k} transform={`rotate(${r} ${x + 17} ${y + 20})`}>
                 <rect x={x} y={y} width="34" height="40" rx="1.5" fill="#fff" />
-                <rect x={x + 3} y={y + 3} width="28" height="28" fill={[C.blush, "#ffd9a8", "#cfe8ff", "#e6d4ff", "#c9f2e3"][k - 1]} />
-                {pic(photo(k), x + 3, y + 3, 28, 28)}
-                <circle cx={x + 17} cy={y + 2} r="3.4" fill={[C.hot, C.gold, C.mint, C.lavender, C.hot][k - 1]} />
+                <rect x={x + 3} y={y + 3} width="28" height="28" fill={[C.blush, "#ffd9a8", "#cfe8ff", "#e6d4ff", "#c9f2e3", "#ffd9a8", "#cfe8ff"][k - 1]} />
+                {pic(photo(k * 3), x + 3, y + 3, 28, 28)}
+                <circle cx={x + 17} cy={y + 2} r="3.4" fill={[C.hot, C.gold, C.mint, C.lavender, C.hot, C.mint, C.gold][k - 1]} />
               </g>
             ))}
             <rect x="320" y="-252" width="40" height="36" fill="#fff3a8" transform="rotate(-6 340 -234)" />
@@ -507,6 +509,8 @@ export default function RoomScene({ sky, available, labels, notes, notesHeading,
           <ellipse cx="372" cy="318" rx="38" ry="38" />
           <rect x="464" y="280" width="78" height="78" rx="6" />
           <ellipse cx="566" cy="78" rx="30" ry="30" />
+          {has("artStudio") && <rect x="470" y="166" width="94" height="50" rx="8" />}
+          {has("wordle") && <rect x="228" y="386" width="118" height="70" rx="6" />}
         </g>
       </g>
 
@@ -612,6 +616,49 @@ export default function RoomScene({ sky, available, labels, notes, notesHeading,
         );
       })()}
 
+      {/* easel with our painting date on the canvas */}
+      {has("artStudio") && (
+        <Obj id="artStudio" label={labels.artStudio || "art studio"} onOpen={onOpen}>
+          <path d={`M${P(515, 168, 0).join(" ")}L${P(515, 196, 168).join(" ")}`} stroke={dark(C.wood, 0.25)} strokeWidth="5" strokeLinecap="round" />
+          <Box x={480} y={192} z={66} dx={70} dy={5} dz={96} c={C.white} />
+          <g transform={onFaceY(197)}>
+            <rect x="484" y="-158" width="62" height="88" fill={C.blush} />
+            {hasContent(config.artStudio?.roomPhoto) && pic({ src: asset(config.artStudio.roomPhoto) }, 484, -158, 62, 88)}
+          </g>
+          <Box x={470} y={198} z={58} dx={90} dy={14} dz={8} c={C.wood} />
+          <g transform={onFaceY(205)} stroke={C.wood} strokeWidth="6" strokeLinecap="round">
+            <path d="M474 0L503 -182M556 0L527 -182" />
+            <path d="M486 -36H544" strokeWidth="4" />
+          </g>
+          <g transform={onFaceY(212)}>
+            {[[488, C.gold], [504, "#3ea8ff"], [520, C.hot], [536, C.lavender]].map(([u, c]) => (
+              <circle key={u} cx={u} cy="-70" r="3.6" fill={c} />
+            ))}
+          </g>
+        </Obj>
+      )}
+
+      {/* wordle board game lying on the floor */}
+      {has("wordle") && (
+        <Obj id="wordle" label={labels.wordle || "our wordle"} onOpen={onOpen}>
+          <Box x={230} y={388} dx={112} dy={64} dz={7} c={C.white} />
+          <g transform={onFloor(7)}>
+            {["mnmhn", "hnmmh", "hhhhh"].map((row, r) =>
+              [...row].map((m, c) => (
+                <g key={`${r}${c}`}>
+                  <rect x={235 + c * 21} y={392 + r * 19.5} width="18" height="17" rx="3" fill={{ h: C.mint, n: C.gold, m: C.blush }[m]} />
+                  {r === 2 && (
+                    <text x={244 + c * 21} y={438} textAnchor="middle" className="wordle-mini">
+                      {"cutie"[c]}
+                    </text>
+                  )}
+                </g>
+              ))
+            )}
+          </g>
+        </Obj>
+      )}
+
       {/* gift boxes in the front corner */}
       <Box x={470} y={286} dx={64} dy={64} dz={48} c={C.white} />
       <g fill={C.gold}>
@@ -669,6 +716,8 @@ export default function RoomScene({ sky, available, labels, notes, notesHeading,
           has("diary") && { id: "diary", at: P(282, 110, 92), text: labels.diary, r: 3 },
           has("photobooth") && { id: "photobooth", at: P(504, 48, 158), text: labels.photobooth, r: -3 },
           has("memoryMatch") && { id: "memoryMatch", at: P(562, 48, 222), text: labels.memoryMatch, r: 3 },
+          has("artStudio") && { id: "artStudio", at: P(515, 230, 28), text: labels.artStudio, r: 3 },
+          has("wordle") && { id: "wordle", at: P(372, 462, 0), text: labels.wordle, r: -3 },
         ]
           .filter(Boolean)
           .map((t) => (

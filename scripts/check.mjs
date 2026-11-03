@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import assert from "node:assert/strict";
 import { loveConfig as config } from "../src/data/loveConfig.js";
 import { hasContent, text, buildSequence, LAYOUTS } from "../src/utils/content.js";
+import { score } from "../src/utils/wordle.js";
 
 // ---- 1. Self-test of the helpers -------------------------------------------
 assert.equal(hasContent("[WRITE YOUR LOVE LETTER HERE]"), false);
@@ -23,17 +24,20 @@ Object.assign(config.features, { diaryCover: true, datePages: true, loveNote: tr
 config.diary.pages.forEach((p) => (p.enabled = true));
 config.loveNote.paragraphs = ["hello"];
 config.loveNote.placement = "beforeEnding";
-assert.equal(types(), "cover,date,date,date,date,note,ending");
+assert.equal(types(), "cover,date,date,date,date,date,note,ending");
 config.loveNote.placement = 2;
-assert.equal(types(), "cover,date,date,note,date,date,ending");
+assert.equal(types(), "cover,date,date,note,date,date,date,ending");
 config.loveNote.placement = "afterEnding";
-assert.equal(types(), "cover,date,date,date,date,ending,note");
+assert.equal(types(), "cover,date,date,date,date,date,ending,note");
 config.loveNote.enabled = false;
-assert.equal(types(), "cover,date,date,date,date,ending");
+assert.equal(types(), "cover,date,date,date,date,date,ending");
 config.features.diaryCover = false;
 config.diary.pages[1].enabled = false;
-assert.equal(types(), "date,date,date,ending");
+assert.equal(types(), "date,date,date,date,ending");
 Object.assign(config, structuredClone(original));
+assert.deepEqual(score("hello", "world"), ["miss", "miss", "miss", "hit", "near"]); // repeated letters
+assert.deepEqual(score("speed", "abide"), ["miss", "miss", "near", "miss", "near"]);
+assert.deepEqual(score("cutie", "cutie"), ["hit", "hit", "hit", "hit", "hit"]);
 console.log("✓ helper self-test passed");
 
 // ---- 2. What's left to personalise ------------------------------------------

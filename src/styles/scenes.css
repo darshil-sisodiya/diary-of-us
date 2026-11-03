@@ -525,3 +525,418 @@ a.btn {
     min-width: 100%;
   }
 }
+
+/* ---------- Art studio (painting date) ---------- */
+.studio-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.4vh, 24px);
+  width: 100%;
+}
+.studio-wall {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  width: 100%;
+  padding: clamp(54px, 7vw, 80px) clamp(22px, 5vw, 64px) clamp(70px, 9vw, 110px);
+  border-radius: 26px;
+  background:
+    var(--grain),
+    radial-gradient(ellipse at 20% 10%, rgb(255 255 255 / 0.7), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--blue) 70%, var(--paper)) 0 var(--floor, 78%), color-mix(in srgb, var(--wood) 80%, var(--paper)) var(--floor, 78%));
+  box-shadow: var(--shadow-lift), inset 0 -3px 0 var(--wood-dark);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.studio-piece {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: studio-sway 7s ease-in-out infinite;
+  transform-origin: 50% -40px;
+}
+.studio-piece--canvas {
+  --tilt: -1.2deg;
+}
+.studio-piece--portrait {
+  --tilt: 2deg;
+  animation-delay: -3s;
+}
+@keyframes studio-sway {
+  0%, 100% { rotate: var(--tilt); }
+  50% { rotate: calc(var(--tilt) * -0.4); }
+}
+
+/* the string + gold nail each piece hangs from */
+.studio-hang {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  width: 46%;
+  height: 50px;
+  translate: -50% 0;
+  background:
+    radial-gradient(circle at 50% 5px, #ffd27a 0 4px, #c9962e 4.5px 5.5px, transparent 6px),
+    linear-gradient(to top left, transparent calc(50% - 1px), var(--ink-soft) 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--ink-soft) 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* stretched canvas whose edges are smeared with our paint */
+.studio-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 12px;
+  border-radius: 6px;
+  background:
+    conic-gradient(from 30deg, #f6cf3f, #f2915a, #cf7fd6, #5e9fe0, #9fd6c4, #f6cf3f);
+  box-shadow: 0 2px 0 rgb(255 255 255 / 0.6) inset, 10px 14px 0 -2px rgb(90 56 51 / 0.12), var(--shadow-lift);
+}
+.studio-canvas::after {
+  /* little paint drips running off the bottom edge */
+  content: "";
+  position: absolute;
+  left: 14%;
+  bottom: -16px;
+  width: 60%;
+  height: 22px;
+  background:
+    radial-gradient(circle at 6% 0, #f2915a 0 6px, transparent 6.5px),
+    radial-gradient(circle at 34% 0, #cf7fd6 0 9px, transparent 9.5px),
+    radial-gradient(circle at 68% 0, #5e9fe0 0 5px, transparent 5.5px),
+    radial-gradient(circle at 92% 0, #f6cf3f 0 7px, transparent 7.5px);
+  pointer-events: none;
+}
+.studio-canvas video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--ink);
+  cursor: pointer;
+}
+.studio-play {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px 7px 11px;
+  border: 0;
+  border-radius: 999px;
+  font: 700 0.85rem var(--sans);
+  color: var(--ink);
+  background: rgb(255 250 243 / 0.9);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: opacity 0.25s, scale 0.2s;
+}
+.studio-play svg {
+  width: 15px;
+  height: 15px;
+}
+.studio-play.is-playing {
+  opacity: 0;
+}
+.studio-canvas:hover .studio-play,
+.studio-play:focus-visible {
+  opacity: 1;
+}
+.studio-play:active {
+  scale: 0.94;
+}
+
+/* chunky gold frame for the portrait */
+.studio-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 14px;
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, #fff1b8, #e3b04b 30%, #fbe39a 52%, #c98f2c 78%, #f6d77c);
+  box-shadow:
+    inset 0 0 0 3px rgb(255 255 255 / 0.45),
+    inset 0 0 0 7px rgb(160 110 30 / 0.35),
+    10px 14px 0 -2px rgb(90 56 51 / 0.12),
+    var(--shadow-lift);
+}
+.studio-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 6px solid var(--paper);
+  box-shadow: inset 0 0 0 1px rgb(90 56 51 / 0.15);
+}
+
+/* museum-style label card */
+.studio-placard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  max-width: 92%;
+  padding: 8px 18px 9px;
+  text-align: center;
+  background: var(--paper);
+  border-radius: 4px;
+  box-shadow: var(--shadow-soft);
+  rotate: 1deg;
+}
+.studio-placard strong {
+  font-family: var(--hand);
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--rose-deep);
+}
+.studio-placard span {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+/* decorations */
+.studio-splat {
+  position: absolute;
+  z-index: -1;
+  opacity: 0.55;
+}
+.splat-1 { top: -22px; left: -26px; width: 130px; }
+.splat-2 { top: 34%; right: -40px; width: 150px; rotate: 70deg; }
+.splat-3 { bottom: 12%; left: 34%; width: 80px; rotate: 160deg; opacity: 0.4; }
+.splat-4 { top: 6%; left: 58%; width: 64px; rotate: -30deg; opacity: 0.45; }
+.studio-doodle {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+.doodle-1 { top: 22px; left: 46%; color: #f6cf3f; }
+.doodle-2 { top: 18%; right: 4%; color: #fff; animation-delay: -1s; }
+.doodle-3 { bottom: 26%; left: 3%; color: #cf7fd6; animation-delay: -2s; }
+.doodle-4 { bottom: 8%; right: 22%; color: #5e9fe0; width: 20px; height: 20px; animation-delay: -0.5s; }
+.studio-palette {
+  position: absolute;
+  left: clamp(10px, 4vw, 48px);
+  bottom: -22px;
+  width: clamp(120px, 18vw, 200px);
+  rotate: -8deg;
+  filter: drop-shadow(0 6px 8px rgb(90 56 51 / 0.2));
+}
+
+@media (max-width: 760px) {
+  .studio-wall {
+    grid-template-columns: 1fr;
+    gap: 76px;
+    padding-bottom: 120px;
+    --floor: 91%;
+  }
+  .studio-frame {
+    width: 100%;
+  }
+  .studio-play {
+    opacity: 1 !important;
+  }
+}
+
+/* ---------- Our wordle ---------- */
+.wordle-scene {
+  --hit: #7cc9a0;
+  --near: #f2c94c;
+  --miss: color-mix(in srgb, var(--ink-soft) 45%, var(--paper));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.4vh, 22px);
+  width: 100%;
+}
+.wordle-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background: var(--grain), var(--paper);
+  box-shadow: var(--shadow-soft);
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  text-align: center;
+}
+.wordle-card > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.wordle-board {
+  display: grid;
+  gap: 6px;
+  width: min(100%, calc(var(--len) * 62px));
+}
+.wordle-row {
+  display: grid;
+  grid-template-columns: repeat(var(--len), 1fr);
+  gap: 6px;
+}
+.wordle-tile {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, var(--rose) 35%, var(--paper));
+  border-radius: 10px;
+  font: 800 clamp(1rem, 0.6rem + 1.6vw, 1.6rem) var(--sans);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.6);
+}
+.wordle-tile.is-typed {
+  border-color: var(--rose);
+  animation: wordle-pop 0.12s ease-out;
+}
+.wordle-tile.hit,
+.wordle-tile.near,
+.wordle-tile.miss {
+  color: #fff;
+  border-color: transparent;
+  animation: wordle-flip 0.5s ease-in both;
+  animation-delay: calc(var(--c) * 0.12s);
+}
+.wordle-tile.hit { background: var(--hit); }
+.wordle-tile.near { background: var(--near); }
+.wordle-tile.miss { background: var(--miss); }
+@keyframes wordle-pop {
+  50% { scale: 1.1; }
+}
+@keyframes wordle-flip {
+  0% { rotate: x 0deg; }
+  50% { rotate: x 90deg; }
+  100% { rotate: x 0deg; }
+}
+.wordle-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(100%, 500px);
+}
+.wordle-keys > div {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.wordle-key {
+  flex: 1;
+  max-width: 44px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  font: 800 1rem var(--sans);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--pink) 55%, var(--paper));
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--rose) 60%, transparent);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.wordle-key.is-wide {
+  flex: 1.5;
+  max-width: 66px;
+}
+.wordle-key svg {
+  width: 20px;
+  height: 20px;
+}
+.wordle-key:active {
+  translate: 0 2px;
+  box-shadow: none;
+}
+.wordle-key.hit,
+.wordle-key.near,
+.wordle-key.miss {
+  color: #fff;
+}
+.wordle-key.hit { background: var(--hit); }
+.wordle-key.near { background: var(--near); }
+.wordle-key.miss { background: var(--miss); }
+.wordle-note,
+.wordle-note strong {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rose-deep);
+}
+.wordle-note.is-error {
+  color: var(--rose-deep);
+}
+.wordle-switch {
+  border: 0;
+  background: none;
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  text-decoration: underline wavy color-mix(in srgb, var(--rose) 50%, transparent);
+  cursor: pointer;
+}
+@media (max-width: 760px) {
+  .wordle-key {
+    height: 46px;
+  }
+}
+.wordle-status {
+  font-family: var(--hand);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.wordle-status.is-mine {
+  color: var(--rose-deep);
+  animation: wordle-pop 1.6s ease-in-out infinite;
+}
+.wordle-row {
+  position: relative;
+}
+.wordle-who-tag {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  translate: 0 -50%;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 800 0.8rem var(--sans);
+  color: #fff;
+}
+.wordle-who-tag.her { background: var(--rose); }
+.wordle-who-tag.you { background: color-mix(in srgb, var(--blue) 40%, #5e9fe0); }
+.wordle-row.is-bad {
+  animation: wordle-shake 0.4s;
+}
+@keyframes wordle-shake {
+  25% { translate: -6px 0; }
+  75% { translate: 6px 0; }
+}
+.wordle-keys.is-waiting {
+  opacity: 0.5;
+}
+.wordle-key:disabled {
+  cursor: default;
+}
+@media (max-width: 760px) {
+  .wordle-board {
+    width: min(100% - 40px, 330px);
+  }
+}

@@ -67,7 +67,6 @@ export function pagePhotos(page) {
 export function allPhotos() {
   return (config.diary?.pages || [])
     .filter((p) => p && p.enabled !== false)
-    .slice(0, 4)
     .flatMap((page) => pagePhotos(page).map((p) => ({ ...p, pageTitle: text(page.title), dateLabel: text(page.dateLabel) })));
 }
 
@@ -85,7 +84,6 @@ export function buildSequence() {
   const dates = isOn("datePages", diary)
     ? (diary.pages || [])
         .filter((p) => p && p.enabled !== false)
-        .slice(0, 4)
         .map((page, i) => ({ type: "date", key: page.id || `date-${i}`, page, memory: i + 1 }))
     : [];
   const total = dates.length;
@@ -119,5 +117,4 @@ if (import.meta.env?.DEV) {
       console.warn(`[loveConfig] Page ${i + 1}: unknown theme "${p.theme}". Options: ${THEMES.join(", ")}`);
     if ((p.photos || []).length > 4) console.warn(`[loveConfig] Page ${i + 1}: only the first 4 photos are used.`);
   });
-  if ((config.diary?.pages || []).length > 4) console.warn("[loveConfig] Only the first 4 date pages are used.");
 }
